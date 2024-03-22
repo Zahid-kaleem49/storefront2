@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -32,8 +34,8 @@ class Product(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
     promotions = models.ManyToManyField(Promotion, blank=True)
 
-    def __str__(self) -> str:
-        return self.title
+    def __str__(self) -> Decimal:
+        return self.unit_price
 
     class Meta:
         ordering = ['title']

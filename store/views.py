@@ -11,7 +11,7 @@ from rest_framework import status
 
 @api_view(['Get'])
 def product_list(request):
-    query_set = Product.objects.all()
+    query_set = Product.objects.select_related('collection').all()
     serializer = ProductSerializer(query_set, many=True)
     return Response(serializer.data)
 
@@ -22,6 +22,5 @@ def product_details(request, id):
     product = get_object_or_404(Product, pk=id)
     serializer = ProductSerializer(product)
     return Response(serializer.data)
-    # except Exception as e:
-    # return Response(status=status.HTTP_404_NOT_FOUND )
-
+# except Product.DoesNotExist as e:
+#     return Response(status=status.HTTP_404_NOT_FOUND )
